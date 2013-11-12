@@ -1,0 +1,22 @@
+h1. PHP-Textile sandbox
+
+Simple public sandbox for "PHP-Textile":https://github.com/textile/php-textile. Send in a HTTP request, get Textile as response, wrapped in a JSON or JSON-P envelope.
+
+h2. Installing
+
+bc. $ git clone https://github.com/gocom/php-textile-sandbox.git && cd php-textile-sandbox
+$ composer install
+
+h2. Usage
+
+The sandbox accepts requests from both GET and POST request methods. Both are 'read' only.
+
+h3. Request parameters
+
+* *method* Parsing method, either @unrestricted@ or @restricted@ (default).
+* *text* Textile input to parse.
+* *doctype* Output document type. Either @html5@ (default) or @xhtml@.
+* *lite* Enable lite mode, either @true@ or @false@ (default).
+* *noimage* Disable image tags, either @true@ (default) or @false@.
+* *rel* Rel attribute applied to links.
+* *callback* JSON-P callback function.
