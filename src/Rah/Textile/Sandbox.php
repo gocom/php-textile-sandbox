@@ -44,7 +44,7 @@ class Sandbox
      */
 
     protected $parameters = array(
-        'method'   => 'restricted',
+        'method'   => array('restricted'),
         'text'     => '',
         'doctype'  => 'html5',
         'lite'     => false,
@@ -156,9 +156,12 @@ class Sandbox
             throw new \Exception('Invalid specified doctype.');
         }
 
-        if (!in_array($this->input['method'], array('restricted', 'unrestricted')))
+        foreach ($this->input['method'] as $method)
         {
-            throw new \Exception('Invalid formatting method.');
+            if (!in_array($method, array('restricted', 'unrestricted')))
+            {
+                throw new \Exception('Invalid formatting method.');
+            }
         }
 
         if ($this->input['callback'])
@@ -242,15 +245,19 @@ class Sandbox
             {
                 if (is_bool($default))
                 {
-                    $this->input[$name] = (bool) $_GET[$name];
+                    $this->input[$name] = (bool) $value;
                 }
                 else if (is_int($default))
                 {
-                    $this->input[$name] = (int) $_GET[$name];
+                    $this->input[$name] = (int) $value;
+                }
+                else if (is_array($default))
+                {
+                    $this->input[$name] = array_unique((array) $value);
                 }
                 else
                 {
-                    $this->input[$name] = (string) $_GET[$name];
+                    $this->input[$name] = (string) $value;
                 }
             }
         }
@@ -266,8 +273,15 @@ class Sandbox
             }
         }
 
-        $method = 'format'.ucfirst($this->input['method']);
-        $this->output = $this->$method();
+        foreach (array('restricted', 'unrestricted') as $name)
+        {
+            if (in_array($name, $this->input['method']))
+            {
+                $method = 'format'.ucfirst($name);
+                $this->output[$name] = $this->$method();
+            }
+        }
+
         $this->responseBody = (string) json_encode(array(
             'options' => $this->input,
             'output'  => $this->output,
