@@ -141,7 +141,7 @@ class Sandbox
 
     protected function filterInput()
     {
-        if (!$this->input['text'])
+        if ($this->input['text'] === '')
         {
             throw new \Exception('No Textile input specified.');
         }
