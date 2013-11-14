@@ -117,6 +117,8 @@ class Sandbox
 
     /**
      * Initializes.
+     *
+     * @param array $options Options
      */
 
     static public function init(array $options = null)
@@ -145,7 +147,9 @@ class Sandbox
     }
 
     /**
-     * Filter input value.
+     * Filters input values.
+     *
+     * @throws \Exception
      */
 
     protected function filterInput()
@@ -190,6 +194,8 @@ class Sandbox
 
     /**
      * Restricted formatter.
+     *
+     * @return string Processed Textile
      */
 
     protected function formatRestricted()
@@ -206,6 +212,8 @@ class Sandbox
 
     /**
      * Un-restricted formatter.
+     *
+     * @return string Processed Textile
      */
 
     protected function formatUnrestricted()
