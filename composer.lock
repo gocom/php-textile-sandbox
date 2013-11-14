@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "0671c283f95f0ae6753849f05228ac3b",
+    "hash": "6d7acf69f08559f58e61f05143038e61",
     "packages": [
         {
             "name": "netcarver/textile",
@@ -56,9 +56,9 @@
     "stability-flags": [
 
     ],
-    "platform": [
-
-    ],
+    "platform": {
+        "php": ">=5.3.0"
+    },
     "platform-dev": [
 
     ]
