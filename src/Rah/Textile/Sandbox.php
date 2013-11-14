@@ -38,7 +38,7 @@ use Netcarver\Textile\Parser as Textile;
 class Sandbox
 {
     /**
-     * Header map.
+     * HTTP status code map.
      *
      * @var array
      */
