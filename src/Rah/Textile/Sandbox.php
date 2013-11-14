@@ -240,7 +240,7 @@ class Sandbox
     {
         $this->input = $this->parameters;
 
-        if ($this->key && (!isset($_REQUEST['key']) || $_REQUEST['key'] !== $this->key))
+        if ($this->isValidKey() === false)
         {
             throw new \Exception('Access denied due to invalid key.');
         }
@@ -309,6 +309,17 @@ class Sandbox
         {
             file_put_contents($this->cache . '/' . $cacheId, $this->responseBody);
         }
+    }
+
+    /**
+     * Validates the given key.
+     *
+     * @return bool FALSE on error
+     */
+
+    protected function isValidKey()
+    {
+        return !$this->key || (isset($_REQUEST['key'])  && in_array((string) $_REQUEST['key'], (array) $this->key, true));
     }
 
     /**
