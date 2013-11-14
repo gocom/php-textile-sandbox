@@ -114,7 +114,8 @@ class Sandbox
     /**
      * Constructor.
      *
-     * @param array $options Options
+     * @param  array $options Options
+     * @throws \Exception
      */
 
     public function __construct(array $options = null)
@@ -122,6 +123,14 @@ class Sandbox
         foreach ((array) $options as $name => $value)
         {
             $this->$name = $value;
+        }
+
+        if ($this->cache)
+        {
+            if (!file_exists($this->cache) || !is_dir($this->cache) || !is_writeable($this->cache))
+            {
+                throw new \Exception('Invalid cache directory: '.$this->cache);
+            }
         }
     }
 
