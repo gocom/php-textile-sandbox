@@ -172,6 +172,7 @@ class Sandbox
             {
                 if (!preg_match('/^[$_\p{L}][$_\p{L}\p{Mn}\p{Mc}\p{Nd}\p{Pc}\x{200C}\x{200D}]*+$/u', $part) || in_array(strtolower($part), $reserved))
                 {
+                    $this->input['callback'] = '';
                     throw new \Exception('Invalid JSON-P callback parameter.');
                 }
             }
