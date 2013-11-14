@@ -38,6 +38,16 @@ use Netcarver\Textile\Parser as Textile;
 class Sandbox
 {
     /**
+     * Header map.
+     *
+     * @var array
+     */
+
+    protected $statusCodes = array(
+        500 => 'Internal Server Error',
+    );
+
+    /**
      * Parameters.
      *
      * @var array
@@ -125,9 +135,6 @@ class Sandbox
     {
         $input = new Sandbox($options);
 
-        header('Access-Control-Allow-Origin: *');
-        header('X-Robots-Tag: noindex');
-
         try
         {
             $input->getResponse();
@@ -135,11 +142,9 @@ class Sandbox
         }
         catch (\Exception $e)
         {
-            header('HTTP/1.1 500 Internal Server Error');
-            header('Status: 500 Internal Server Error');
-
             $input->sendResponse(array(
-                'error' => array(
+                'status' => 500,
+                'error'  => array(
                     'message' => $e->getMessage(),
                 )
             ));
@@ -331,7 +336,17 @@ class Sandbox
 
     public function sendResponse(array $input = null)
     {
-        if ($input === null && $this->responseBody)
+        header('Access-Control-Allow-Origin: *');
+        header('X-Robots-Tag: noindex');
+
+        if (isset($input['status']) && isset($this->statusCodes[$input['status']]))
+        {
+            header('HTTP/1.1 '.intval($input['status']).' '.$this->statusCodes[$input['status']]);
+            header('Status: 500 '.intval($input['status']).' '.$this->statusCodes[$input['status']]);
+            unset($input['status']);
+        }
+
+        if ($this->responseBody)
         {
             $json = $this->responseBody;
         }
