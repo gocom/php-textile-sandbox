@@ -102,17 +102,26 @@ class Sandbox
     public $key = false;
 
     /**
+     * Constructor.
+     *
+     * @param array $options Options
+     */
+
+    public function __construct(array $options = null)
+    {
+        foreach ((array) $options as $name => $value)
+        {
+            $this->$name = $value;
+        }
+    }
+
+    /**
      * Initializes.
      */
 
     static public function init(array $options = null)
     {
-        $input = new Sandbox;
-
-        foreach ((array) $options as $name => $value)
-        {
-            $input->$name = $value;
-        }
+        $input = new Sandbox($options);
 
         header('Access-Control-Allow-Origin: *');
         header('X-Robots-Tag: noindex');
