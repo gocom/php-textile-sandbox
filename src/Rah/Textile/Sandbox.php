@@ -96,7 +96,7 @@ class Sandbox
     /**
      * Request key.
      *
-     * @var string
+     * @var string|bool
      */
 
     public $key = false;
@@ -319,7 +319,7 @@ class Sandbox
 
     protected function isValidKey()
     {
-        return !$this->key || (isset($_REQUEST['key'])  && in_array((string) $_REQUEST['key'], (array) $this->key, true));
+        return $this->key === false || (isset($_REQUEST['key'])  && in_array((string) $_REQUEST['key'], (array) $this->key, true));
     }
 
     /**
