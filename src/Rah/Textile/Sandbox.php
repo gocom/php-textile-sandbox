@@ -298,7 +298,7 @@ class Sandbox
 
         if ($this->cache && $cacheId = md5(json_encode($this->input)))
         {
-            if (file_exists($this->cache . '/' . $cacheId))
+            if (file_exists($this->cache . '/' . $cacheId . '.json'))
             {
                 $this->responseBody = file_get_contents($this->cache . '/' . $cacheId . '.json');
                 return;
@@ -321,7 +321,7 @@ class Sandbox
 
         if ($this->cache && $cacheId)
         {
-            file_put_contents($this->cache . '/' . $cacheId, $this->responseBody);
+            file_put_contents($this->cache . '/' . $cacheId . '.json', $this->responseBody);
         }
     }
 
