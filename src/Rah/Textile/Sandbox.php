@@ -236,7 +236,7 @@ class Sandbox
      * @throws \Exception
      */
 
-    protected function getResponse()
+    public function getResponse()
     {
         $this->input = $this->parameters;
 
@@ -329,7 +329,7 @@ class Sandbox
      * @throws \Exception
      */
 
-    protected function sendResponse(array $input = null)
+    public function sendResponse(array $input = null)
     {
         if ($input === null && $this->responseBody)
         {
