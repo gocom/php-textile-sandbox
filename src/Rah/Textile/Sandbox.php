@@ -154,6 +154,20 @@ class Sandbox
 
     protected function filterInput()
     {
+        if ($this->input['callback'])
+        {
+            $reserved = array('break', 'do', 'instanceof', 'typeof', 'case', 'else', 'new', 'var', 'catch', 'finally', 'return', 'void', 'continue', 'for', 'switch', 'while', 'debugger', 'function', 'this', 'with',  'default', 'if', 'throw', 'delete', 'in', 'try', 'class', 'enum',  'extends', 'super', 'const', 'export', 'import', 'implements', 'let', 'private', 'public', 'yield', 'interface', 'package', 'protected', 'static', 'null', 'true', 'false');
+
+            foreach (explode('.', $this->input['callback']) as $part)
+            {
+                if (!preg_match('/^[$_\p{L}][$_\p{L}\p{Mn}\p{Mc}\p{Nd}\p{Pc}\x{200C}\x{200D}]*+$/u', $part) || in_array(strtolower($part), $reserved))
+                {
+                    $this->input['callback'] = '';
+                    throw new \Exception('Invalid JSON-P callback parameter.');
+                }
+            }
+        }
+
         if ($this->input['text'] === '')
         {
             throw new \Exception('No Textile input specified.');
@@ -174,20 +188,6 @@ class Sandbox
             if (!in_array($method, array('restricted', 'unrestricted')))
             {
                 throw new \Exception('Invalid formatting method.');
-            }
-        }
-
-        if ($this->input['callback'])
-        {
-            $reserved = array('break', 'do', 'instanceof', 'typeof', 'case', 'else', 'new', 'var', 'catch', 'finally', 'return', 'void', 'continue', 'for', 'switch', 'while', 'debugger', 'function', 'this', 'with',  'default', 'if', 'throw', 'delete', 'in', 'try', 'class', 'enum',  'extends', 'super', 'const', 'export', 'import', 'implements', 'let', 'private', 'public', 'yield', 'interface', 'package', 'protected', 'static', 'null', 'true', 'false');
-
-            foreach (explode('.', $this->input['callback']) as $part)
-            {
-                if (!preg_match('/^[$_\p{L}][$_\p{L}\p{Mn}\p{Mc}\p{Nd}\p{Pc}\x{200C}\x{200D}]*+$/u', $part) || in_array(strtolower($part), $reserved))
-                {
-                    $this->input['callback'] = '';
-                    throw new \Exception('Invalid JSON-P callback parameter.');
-                }
             }
         }
     }
