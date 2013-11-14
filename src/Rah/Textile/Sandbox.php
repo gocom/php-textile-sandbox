@@ -112,6 +112,14 @@ class Sandbox
     public $key = false;
 
     /**
+     * Sleep time before response.
+     *
+     * @var int
+     */
+
+    public $sleep = 0;
+
+    /**
      * Constructor.
      *
      * @param  array $options Options
@@ -295,6 +303,11 @@ class Sandbox
         }
 
         $this->filterInput();
+
+        if ($this->sleep)
+        {
+            sleep($this->sleep);
+        }
 
         if ($this->cache && $cacheId = md5(json_encode($this->input)))
         {
